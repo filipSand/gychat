@@ -1,5 +1,6 @@
 body{
     margin: 0;
+    font-family: 'Mukata', sans-serif;
 }
 
 header{
@@ -7,14 +8,13 @@ header{
     background-color: orange;
 }
 
-.header-button{
-    padding: none;
-    border: none;
-}
-
 .header-button-image{
     max-width: 30px;
+}
 
+.header-button{
+    align-self: center;
+    margin: 0.1em;
 }
 
 #user-button{
@@ -31,4 +31,9 @@ header{
     font-size: 1.2em;
     margin: 0;
     margin-left: 0.4cm;
+    font-weight: 200;
+}
+
+.current-chat{
+    flex-grow: 1;
 }
