@@ -4,6 +4,7 @@ body{
     background-color: #fcfcfc;
 }
 
+/* BUG The header hides certain parts of the top message. */
 header{
     display: flex;
     background-color: orange;
