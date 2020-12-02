@@ -1,11 +1,15 @@
 body{
     margin: 0;
     font-family: 'Mukata', sans-serif;
+    background-color: #fcfcfc;
 }
 
 header{
     display: flex;
     background-color: orange;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 .header-button-image{
@@ -21,6 +25,7 @@ header{
     justify-self: right;
 }
 
+/*TODO Move page specific CSS to another file to reduce loading time of unnessecary CSS rules */
 .current-chat-friendly-name{
     font-size: 2em;
     margin: 0;
@@ -37,3 +42,34 @@ header{
 .current-chat{
     flex-grow: 1;
 }
+
+.chat-window-main{
+    display: flex;
+    flex-flow: column-reverse;
+    margin: 0.5em;
+}
+
+.message{
+    margin-top: 1em;
+    width: 80%;
+    background-color: palegreen;
+    border-radius: 2mm;
+}
+
+.sentby-this{
+    margin-left: 20%;
+}
+
+.message-details{
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 300;
+    margin: 0;
+    font-size: 75%;
+}
+
+.message-text{
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+}
+
+
