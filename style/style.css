@@ -14,12 +14,13 @@ header{
 }
 
 .header-button-image{
-    max-width: 30px;
+    width: 30px;
 }
 
 .header-button{
     align-self: center;
     margin: 0.1em;
+    background: orange;
 }
 
 #user-button{
