@@ -28,6 +28,10 @@ header{
 }
 
 /*TODO Move page specific CSS to another file to reduce loading time of unnessecary CSS rules */
+main, footer{
+    max-width: 960px;
+}
+
 .current-chat-friendly-name{
     font-size: 1.5em;
     margin: 0;
