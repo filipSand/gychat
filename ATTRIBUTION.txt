@@ -1,7 +1,11 @@
-menuicon.png:
+menuicon.svg:
 Icon by Raj Dev on Freeicons.io. CC-BY-3.0
 https://freeicons.io/business-and-online-icons/menu-icon-icon
 
-usericon.png
+usericon.svg
 Icon by Raj Dev on Freeicons.io. CC-BY-3.0
 https://freeicons.io/user-and-profile-icons/forward-user-profile-icon-6314
+
+sendicon.svg
+Icon by Raj Dev on Freeicons.io. CC-BY-3.0
+https://freeicons.io/business-and-online-icons/send-icon-icon-2

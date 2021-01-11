@@ -18,14 +18,14 @@
 <body>
     <header class="chat-window-header">
         <button id="menu" class="header-button"><img src="graphics/menuicon.svg" alt="Öppna meny"
-                class="header-button-image"></button>
+                class="button-image"></button>
 
         <div class="current-chat">
             <h2 class="current-chat-friendly-name">Förnamn Efternamn</h2>
             <h3 class="current-chat-username">@användarnamn</h3>
         </div>
         <button id="user-button" class="header-button"><img src="graphics/usericon.svg" alt="(användarnamn)"
-                class="header-button-image"></button>
+                class="button-image"></button>
     </header>
     <main class="chat-window-main">
         <section class="message sentby-this">
@@ -109,6 +109,12 @@
             </p>
         </section>
     </main>
+    <footer>
+        <form method="post" class="message-send">
+            <input type="text" name="new-message-text" id="new-message-text">
+            <button id="message-send"><img src="graphics/sendicon.svg" alt="Skicka" class="button-image"></button>
+        </form>
+    </footer>
 </body>
 
 </html>
