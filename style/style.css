@@ -95,12 +95,13 @@ footer{
 
 #new-message-text{
     width: 85%;
-    height: 2em;
+    height: 2.3em;
 }
 
 #message-send{
     position: absolute;
     bottom: 0.1em;
     right: 0.1em;
+    background-color: #fcfcfc;
 }
 
