@@ -55,6 +55,7 @@ header{
     margin-top: 1em;
     max-width: 80%;
     border-radius: 2mm;
+    padding-left: 0.2em;
 }
 
 .sentby-this{
