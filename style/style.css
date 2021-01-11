@@ -8,7 +8,7 @@ body{
 header{
     display: flex;
     background-color: orange;
-    position: absolute;
+    position: fixed;
     width: 100%;
     top: 0;
 }
@@ -52,13 +52,17 @@ header{
 
 .message{
     margin-top: 1em;
-    width: 80%;
-    background-color: palegreen;
+    max-width: 80%;
     border-radius: 2mm;
 }
 
 .sentby-this{
     margin-left: 20%;
+    background-color: lightgray;
+}
+
+.sentby-other{
+    background-color: #ffb510;
 }
 
 .message-details{
@@ -71,6 +75,10 @@ header{
 .message-text{
     margin-top: 0.5em;
     margin-bottom: 0.3em;
+}
+
+.message:last-child{
+    margin-top: 3em;
 }
 
 
