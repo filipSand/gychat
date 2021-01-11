@@ -4,7 +4,7 @@ body{
     background-color: #fcfcfc;
 }
 
-/* BUG The header hides certain parts of the top message. */
+
 header{
     display: flex;
     background-color: orange;
@@ -106,6 +106,19 @@ footer{
     bottom: 0.1em;
     right: 0.3em;
     background-color: #fcfcfc;
+}
+
+.left-menu{
+    display: block;
+    position: absolute;
+    top: 48px;
+    height: 100%;
+    background-color: orange;
+    z-index: 10;
+}
+
+.left-menu-list{
+    list-style: none;
 }
 
 /*Media queries*/
