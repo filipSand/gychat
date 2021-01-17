@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="style/external.css">
     <link rel="stylesheet" href="style/style.css">
+    <script src="scripts/functions.js"></script>
     <script src="scripts/chat.js" defer></script>
     <title>Chatt - Gymnasiearbete</title>
 </head>
@@ -27,7 +28,9 @@
         <button id="user-button" class="header-button"><img src="graphics/usericon.svg" alt="(användarnamn)"
                 class="button-image"></button>
     </header>
-    <nav class="left-menu">
+    <!-- Show this only when the menu is active -->
+    <div id="blackbox"></div>
+    <nav class="left-menu" id="left-menu-a">
         <ul class="left-menu-list conversation-list">
             <li class="conversation-list-item">
                 <p class="conversation-list-friendly-name">Förnamn Efternamn</p>
