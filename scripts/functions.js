@@ -11,7 +11,7 @@ function hideMenu() {
  *  Show the side-meny via an animation and set required showSideMenu.
  */
 function showMenu() {
-    sideMenu.style.display = "block";
+    sideMenu.style.display = "flex";
     blackBox.style.display = "block";
     showSideMenu = true;
 }

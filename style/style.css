@@ -117,10 +117,58 @@ footer{
     /* Apply a z-index to force the block to the front */
     z-index: 10; 
     max-width: 80%;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .left-menu-list{
     list-style: none;
+    padding-left: 0.5em;
+    margin-top: 0;
+    margin-bottom: 54px;
+}
+
+.conversation-list{
+    margin-top: 0.5em;
+}
+
+.conversation-list-friendly-name, .conversation-list-last-message{
+    margin: 0;
+    /* Margins are added between the items instead */
+}
+
+.conversation-list-friendly-name{
+    font-weight: bold;
+    font-size: 110%;
+}
+.conversation-list-last-message{
+    font-size: 90%;
+}
+
+.conversation-list-item, .left-menu-setting{
+    margin-bottom: 0.4em;
+}
+
+.left-menu-link{
+    color: black;
+    text-decoration: none;
+}
+
+.left-menu-link:hover, .left-menu-link:active{
+    color: black;
+    text-decoration: underline; 
+}
+
+/* Not a great rule, but it works :| */
+.left-menu-setting a{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    
+}
+
+.left-menu-setting-image{
+    padding-right: 10px;
 }
 
 #blackbox{

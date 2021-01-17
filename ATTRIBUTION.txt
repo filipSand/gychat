@@ -17,3 +17,7 @@ https://freeicons.io/free-setting-and-configuration-icons/gear-settings-setting-
 settingsicon.svg
 Icon by Fasil on Freeicons.io. CC-BY-3.0
 https://freeicons.io/dripicons-v.2-free-icon-set/exit-icon-26542
+
+plusicon.svg
+Icon by Raj Dev on Freeicons.io. CC-BY-3.0
+https://freeicons.io/business-and-online-icons/plus-icon-icon-2
