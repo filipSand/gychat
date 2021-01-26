@@ -1,0 +1,35 @@
+body{
+    background-color: orange;
+}
+
+.login-page-form{
+    display: grid;
+    grid-template-columns: 2% 32% 64% 2%;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+#username-label{
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#username-field{
+    grid-column: 3;
+    grid-row: 1;
+}
+
+#password-label{
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#password-field{
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#login-button{
+    grid-column: 2;
+    grid-row: 3;
+    color: black;
+}
