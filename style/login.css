@@ -1,11 +1,18 @@
 body{
     background-color: orange;
+    max-width: 800px;
+    margin-left: 2%;
 }
 
 .login-page-form{
     display: grid;
     grid-template-columns: 2% 32% 64% 2%;
     grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 0.4em;
+}
+
+a{
+    color: black;
 }
 
 #username-label{
@@ -32,4 +39,41 @@ body{
     grid-column: 2;
     grid-row: 3;
     color: black;
+}
+
+@media screen and (min-width:800px){
+    .login-page-form{
+        grid-template-columns: 33% 67% ;
+        
+    }
+    
+    #username-label{
+        grid-column: 1;
+        grid-row: 1;
+    }
+    
+    #username-field{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    
+    #password-label{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    
+    #password-field{
+        grid-column: 2;
+        grid-row: 2;
+    }
+    #login-button{
+        grid-column: 1;
+        grid-row: 3;
+        color: black;
+    }
+
+    body{
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
