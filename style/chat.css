@@ -80,7 +80,7 @@ footer{
 
 
 /*Media queries*/
-/* TODO Device/media dodad */
+
 @media screen and (min-width:800px){
     .message{
         margin-top: 1em;
