@@ -1,5 +1,4 @@
 
-
 .current-chat-friendly-name{
     font-size: 1.5em;
     margin: 0;
@@ -76,7 +75,9 @@ footer{
     bottom: 0.1em;
     right: 0.3em;
     background-color: #fcfcfc;
+
 }
+
 
 
 /*Media queries*/
