@@ -1,3 +1,13 @@
+<?php
+session_start();
+include_once "scripts/config.php";
+
+if (isset($_POST['username'])) {
+    $sql = "SELECT * FROM user WHERE name=:username AND password_hash=:password_hash";
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="sv">
 
@@ -25,11 +35,10 @@
         <label for="username" id="username-label">Användarnamn</label>
         <input type="text" id="username-field" name="username" class="login-field" required>
         <label for="password" id="password-label">Lösenord</label>
-        <input type="password" id="password-field" name="password" class="login-field" placeholder="Minst 8 tecken"
-            required>
+        <input type="password" id="password-field" name="password" class="login-field" placeholder="Minst 12 tecken" required>
         <button type="submit" id="login-button">Logga in</button>
     </form>
-    <h3><a href="#">Ny användare</a></h3>
+    <h3><a href="signup.php">Ny användare</a></h3>
 
 
 </body>
