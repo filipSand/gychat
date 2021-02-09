@@ -1,6 +1,9 @@
 <?php
 session_start();
 include_once "scripts/config.php";
+include_once "scripts/functions.php";
+
+$message = "";
 
 if (isset($_POST['username'])) {
     $sql = "SELECT * FROM user WHERE name=:username";
@@ -8,7 +11,20 @@ if (isset($_POST['username'])) {
     $ps->bindValue(":username", $_POST['username']);
     $ps->execute();
 
-    
+    if ($ps->rowCount() == 1) {
+        $passwordHash = $ps->fetch('password_hash');
+        $passwordProvided = $_POST['password'];
+
+        if (password_verify($passwordProvided, $passwordHash)) {
+            //Authorize the user
+        } else {
+            userErrorCodes(2);
+        }
+    } else if ($ps->rowCount() == 0) {
+        userErrorCodes(2);
+    } else {
+        userErrorCodes(1);
+    }
 }
 
 ?>
@@ -42,6 +58,7 @@ if (isset($_POST['username'])) {
         <label for="password" id="password-label">Lösenord</label>
         <input type="password" id="password-field" name="password" class="login-field" placeholder="Minst 12 tecken" required>
         <button type="submit" id="login-button">Logga in</button>
+        <p id="login-message"><?= $message ?></p>
     </form>
     <h3><a href="signup.php">Ny användare</a></h3>
 

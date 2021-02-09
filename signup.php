@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once "scripts/config.php";
+include_once "scripts/functions.php";
 //Will be returned to the user on error
 $message = "";
 var_dump($_POST);
@@ -34,13 +35,13 @@ if (isset($_POST['username'])) {
                 //TODO login and rediret to newconversation.php
 
             } else {
-                $message = "Ett fel uppstod, var god försök igen.";
+                userErrorCodes(1);
             }
         } else {
-            $message = "Lösenorden matchar inte";
+            userErrorCodes(5);
         }
     } else {
-        $message = "Användarnamnet används redan";
+        userErrorCodes(4);
     }
 }
 
