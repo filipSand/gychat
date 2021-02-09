@@ -6,32 +6,41 @@ $message = "";
 var_dump($_POST);
 //If the information is set
 if (isset($_POST['username'])) {
-    var_dump("HÅÅÅÅÅ");
+    //Check that the username isn't taken
+    $sql = "SELECT * FROM user WHERE name=:name";
+    $ps = $db->prepare($sql);
+    $ps->bindValue(":name", $_POST['username']);
+    $ps->execute();
 
-    //Check that the same password was entered into both the password and the confirm password fields
-    if ($_POST['password'] == $_POST['password-confirm']) {
-        var_dump("HEEEEJ");
-        $sql = "INSERT INTO user (id, name, friendly_name, password_hash) VALUES (NULL, :name, :friendly_name, :password_hash)";
-        $ps = $db->prepare($sql);
-        $ps->bindValue(":name", $_POST['username']);
-        $ps->bindValue(":friendly_name", $_POST['friendly-name']);
-        //See https://www.php.net/manual/en/function.password-hash.php 
-        $ps->bindValue(":password_hash", password_hash($_POST['password'], PASSWORD_DEFAULT));
-        $ps->execute();
+    //If any rows are returned, then the username is taken!
+    if ($ps->rowCount() == 0) {
+        //Check that the same password was entered into both the password and the confirm password fields
+        if ($_POST['password'] == $_POST['password-confirm']) {
+            var_dump("HEEEEJ");
+            $sql = "INSERT INTO user (id, name, friendly_name, password_hash) VALUES (NULL, :name, :friendly_name, :password_hash)";
+            $ps = $db->prepare($sql);
+            $ps->bindValue(":name", $_POST['username']);
+            $ps->bindValue(":friendly_name", $_POST['friendly-name']);
+            //See https://www.php.net/manual/en/function.password-hash.php 
+            $ps->bindValue(":password_hash", password_hash($_POST['password'], PASSWORD_DEFAULT));
+            $ps->execute();
 
 
-        //If the returned error code is 00000, then the operation was completed successfully and the user can be logged in with their new user. 
-        $result = $ps->errorInfo();
-        var_dump($result);
-        if ($result[0] = '00000') {
-            $message = "Inga fel upptäcktes, registrering lyckad";
-            //TODO login and rediret to newconversation.php
+            //If the returned error code is 00000, then the operation was completed successfully and the user can be logged in with their new user. 
+            $result = $ps->errorInfo();
+            var_dump($result);
+            if ($result[0] == '00000') {
+                $message = "Inga fel upptäcktes, registrering lyckad";
+                //TODO login and rediret to newconversation.php
 
+            } else {
+                $message = "Ett fel uppstod, var god försök igen.";
+            }
         } else {
-            $message = "Ett fel uppstod, var god försök igen.";
+            $message = "Lösenorden matchar inte";
         }
     } else {
-        $message = "Lösenorden matchar inte";
+        $message = "Användarnamnet används redan";
     }
 }
 

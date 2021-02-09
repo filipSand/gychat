@@ -3,7 +3,12 @@ session_start();
 include_once "scripts/config.php";
 
 if (isset($_POST['username'])) {
-    $sql = "SELECT * FROM user WHERE name=:username AND password_hash=:password_hash";
+    $sql = "SELECT * FROM user WHERE name=:username";
+    $ps = $db->prepare($sql);
+    $ps->bindValue(":username", $_POST['username']);
+    $ps->execute();
+
+    
 }
 
 ?>
