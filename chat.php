@@ -1,3 +1,10 @@
+<?php
+include_once "./config.php";
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="sv">
 
@@ -19,15 +26,13 @@
 
 <body>
     <header class="chat-window-header">
-        <button id="menu" class="header-button"><img src="graphics/menuicon.svg" alt="Öppna meny"
-                class="button-image"></button>
+        <button id="menu" class="header-button"><img src="graphics/menuicon.svg" alt="Öppna meny" class="button-image"></button>
 
         <div class="current-chat">
             <h2 class="current-chat-friendly-name">Förnamn Efternamn</h2>
             <h3 class="current-chat-username">@användarnamn</h3>
         </div>
-        <button id="user-button" class="header-button"><img src="graphics/usericon.svg" alt="(användarnamn)"
-                class="button-image"></button>
+        <button id="user-button" class="header-button"><img src="graphics/usericon.svg" alt="(användarnamn)" class="button-image"></button>
     </header>
     <!-- Show this only when the menu is active -->
     <div id="blackbox"></div>
@@ -66,16 +71,13 @@
         </ul>
         <ul class="left-menu-list left-menu-settings">
             <li class="left-menu-setting">
-                <a href="#" class="left-menu-link"><img src="graphics/plusicon.svg" alt="Lägg till"
-                        class="button-image left-menu-setting-image">Ny chatt</a>
+                <a href="#" class="left-menu-link"><img src="graphics/plusicon.svg" alt="Lägg till" class="button-image left-menu-setting-image">Ny chatt</a>
             </li>
             <li class="left-menu-setting">
-                <a href="#" class="left-menu-link"><img src="graphics/settingsicon.svg" alt="Inställningar"
-                        class="button-image left-menu-setting-image">Inställningar</a>
+                <a href="#" class="left-menu-link"><img src="graphics/settingsicon.svg" alt="Inställningar" class="button-image left-menu-setting-image">Inställningar</a>
             </li>
             <li class="left-menu-setting">
-                <a href="#" class="left-menu-link"><img src="graphics/exitsymbol.svg" alt="Logga ut"
-                        class="button-image left-menu-setting-image">
+                <a href="#" class="left-menu-link"><img src="graphics/exitsymbol.svg" alt="Logga ut" class="button-image left-menu-setting-image">
                     Logga ut
                 </a>
             </li>

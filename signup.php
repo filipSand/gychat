@@ -31,17 +31,17 @@ if (isset($_POST['username'])) {
             $result = $ps->errorInfo();
             var_dump($result);
             if ($result[0] == '00000') {
-                $message = "Inga fel upptäcktes, registrering lyckad";
+                $message = userErrorCodes(0);
                 //TODO login and rediret to newconversation.php
 
             } else {
-                userErrorCodes(1);
+                $message = userErrorCodes(1);
             }
         } else {
-            userErrorCodes(5);
+            $message = userErrorCodes(5);
         }
     } else {
-        userErrorCodes(4);
+        $message = userErrorCodes(4);
     }
 }
 
@@ -85,6 +85,7 @@ if (isset($_POST['username'])) {
         <input type="password" name="password-confirm" id="password-confirm-field" required>
 
         <button type="submit" id="login-button">Registrera dig</button>
+
     </form>
     <p><?= $message ?></p>
 

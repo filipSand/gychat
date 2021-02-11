@@ -11,19 +11,24 @@ if (isset($_POST['username'])) {
     $ps->bindValue(":username", $_POST['username']);
     $ps->execute();
 
+    var_dump($ps->errorInfo());
+
     if ($ps->rowCount() == 1) {
-        $passwordHash = $ps->fetch('password_hash');
+        $info = $ps->fetch();
+        $passwordHash = $info['password_hash'];
         $passwordProvided = $_POST['password'];
 
         if (password_verify($passwordProvided, $passwordHash)) {
-            //Authorize the user
+            $message = userErrorCodes(0);
+            logInUser($info['id'], true);
+            exit;
         } else {
-            userErrorCodes(2);
+            $message = userErrorCodes(2);
         }
     } else if ($ps->rowCount() == 0) {
-        userErrorCodes(2);
+        $message = userErrorCodes(2);
     } else {
-        userErrorCodes(1);
+        $message = userErrorCodes(1);
     }
 }
 
