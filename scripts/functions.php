@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-include_once "config.php";
+require_once "config.php";
 
 
 /**
@@ -11,6 +11,7 @@ include_once "config.php";
  */
 function logInUser(int $userId, bool $keepBetweenSessions)
 {
+    print("I'm called");
     global $db;
     $token = generateUniqueToken();
     //Store the token in session
@@ -24,6 +25,8 @@ function logInUser(int $userId, bool $keepBetweenSessions)
     $ps->bindValue(":keep_between_sessions", $keepBetweenSessions);
     $ps->bindValue(":browser_session", session_id());
     $ps->execute();
+
+    var_dump($ps->errorInfo());
 
     //Store a cookie with the token on the user's computer for 2 months
     if ($keepBetweenSessions) {
@@ -56,7 +59,8 @@ function generateUniqueToken()
     if ($ps->rowCount() == 0) {
         return $candidate;
     } else {
-        generateUniqueToken();
+        $newCandidate = generateUniqueToken();
+        return $newCandidate;
     }
 }
 
@@ -65,10 +69,100 @@ function generateUniqueToken()
  * Should no such token exist, the browser is redirected to the log-in page, if a user is verified,
  * user_id is returned.
  * 
- * @return int $userId - The id of the user that is verified. 
+ * @return $userId - The id of the user that is verified. 
  */
 function checkLogin()
 {
+    global $db;
+
+    if (isset($_SESSION['token'])) {
+        $token = $_SESSION['token'];
+
+        var_dump($token);
+
+        //Call the database and verify the token!
+        $sql = "SELECT * FROM session WHERE token=:token";
+        $ps = $db->prepare($sql);
+        $ps->bindValue(":token", $token);
+        $ps->execute();
+
+        var_dump($ps->rowCount());
+
+
+        //Should the token exist, store the response in $return
+        if ($return = $ps->fetch()) {
+            if ($return['keep_between_sessions' == 1]) {
+                //Check if current session, otherwise renew this
+                // only checking once per session avoids spamming the server. 
+                if ($return['browser_session'] == session_id()) {
+                    return $return['user_id'];
+                } else {
+                    //Renew the confidence given to me by the server. 
+                    $sql = "UPDATE session SET date_created = CURRENT_TIMESTAMP, browser_session = :browser_session WHERE token=:token";
+                    $ps = $db->prepare($sql);
+                    $ps->bindValue(":token", $return['token']);
+                    $ps->bindValue(":browser_session", session_id());
+                    $ps->execute();
+                }
+            } else {
+                //Check if current session, otherwise redirect to login
+                if ($return['browser_session'] == session_id()) {
+                    return $return['user_id'];
+                } else {
+                    print("It's me");
+                    exit;
+                }
+            }
+        } else {
+            //If the token exist but no response in database, redirect to login page and clear $_SESSION['token']
+            unset($_SESSION['token']);
+            print("It's me 2");
+            // header("Location: index.php");
+            exit;
+        }
+    } else if (doesValidLoginCookieExist()) {
+        //Call yourself and verify the token in $_SESSION.
+        checkLogin();
+    } else {
+        print("It's me 3");
+        // header("Location: index.php");
+        exit;
+    }
+}
+
+/**
+ * Check for a valid token cookie. Stores the token in session if true. 
+ * @return bool True if a valid cookie exist, otherwise false
+ */
+function doesValidLoginCookieExist()
+{
+
+    global $db;
+
+    //Verify if $token is set.
+    if (isset($_COOKIE['keep-between-session'])) {
+        $token = $_COOKIE['keep-between-session'];
+
+        //Test that this works (it should though :shrugh:)
+        $sql = "SELECT * FROM session WHERE token=:token";
+        $ps = $db->prepare($sql);
+        $ps->bindValue(":token", $token);
+        $ps->execute();
+        if ($ps->rowCount() > 0) {
+            $result = $ps->fetch();
+            if ($result['keep_between_sessions'] == 1) {
+                //TODO Check date of expiry
+                $_SESSION['token'] = $result['token'];
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 /**

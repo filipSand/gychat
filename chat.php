@@ -1,5 +1,11 @@
 <?php
-include_once "./config.php";
+include_once "scripts/config.php";
+include_once "scripts/functions.php";
+session_start();
+
+$userID = checkLogin();
+
+var_dump($userID);
 
 
 

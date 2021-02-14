@@ -31,9 +31,15 @@ if (isset($_POST['username'])) {
             $result = $ps->errorInfo();
             var_dump($result);
             if ($result[0] == '00000') {
-                $message = userErrorCodes(0);
-                //TODO login and rediret to newconversation.php
+                //Get the freshly created userID
+                $sql = "SELECT id FROM user WHERE name=:name";
+                $ps = $db->prepare($sql);
+                $ps->bindValue(":name", $_POST['username']);
+                $ps->execute();
 
+                $row = $ps->fetch();
+                var_dump($row);
+                logInUser($row['id'], true);
             } else {
                 $message = userErrorCodes(1);
             }

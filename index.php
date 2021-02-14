@@ -5,6 +5,12 @@ include_once "scripts/functions.php";
 
 $message = "";
 
+if (doesValidLoginCookieExist()) {
+    //If a valid cookie exists, redirect to chat.php and let that script handle verification.
+    header("Location: chat.php");
+    exit;
+}
+
 if (isset($_POST['username'])) {
     $sql = "SELECT * FROM user WHERE name=:username";
     $ps = $db->prepare($sql);
