@@ -109,7 +109,7 @@ function checkLogin()
                 if ($return['browser_session'] == session_id()) {
                     return $return['user_id'];
                 } else {
-                    print("It's me");
+                    header("Location: index.php");
                     exit;
                 }
             }
@@ -117,15 +117,14 @@ function checkLogin()
             //If the token exist but no response in database, redirect to login page and clear $_SESSION['token']
             unset($_SESSION['token']);
             print("It's me 2");
-            // header("Location: index.php");
+            header("Location: index.php");
             exit;
         }
     } else if (doesValidLoginCookieExist()) {
         //Call yourself and verify the token in $_SESSION.
         checkLogin();
     } else {
-        print("It's me 3");
-        // header("Location: index.php");
+        header("Location: index.php");
         exit;
     }
 }
