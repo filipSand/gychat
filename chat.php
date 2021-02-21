@@ -7,6 +7,11 @@ $userID = checkLogin();
 
 var_dump($userID);
 
+//If no conversation is present, auto-redirect.
+if (isset($_GET['conversation']) == false) {
+    autoRedirectToConversation();
+}
+
 
 
 ?>
@@ -77,7 +82,7 @@ var_dump($userID);
         </ul>
         <ul class="left-menu-list left-menu-settings">
             <li class="left-menu-setting">
-                <a href="#" class="left-menu-link"><img src="graphics/plusicon.svg" alt="Lägg till" class="button-image left-menu-setting-image">Ny chatt</a>
+                <a href="./newconversation.php" class="left-menu-link"><img src="graphics/plusicon.svg" alt="Lägg till" class="button-image left-menu-setting-image">Ny chatt</a>
             </li>
             <li class="left-menu-setting">
                 <a href="#" class="left-menu-link"><img src="graphics/settingsicon.svg" alt="Inställningar" class="button-image left-menu-setting-image">Inställningar</a>

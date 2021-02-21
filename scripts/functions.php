@@ -5,6 +5,19 @@ require_once "config.php";
 
 
 /**
+ * Check what conversation the server should auto-redirect to if none is set in $_GET.
+ * If no conversation is found auto-redirect to newconversation.php
+ */
+function autoRedirectToConversation()
+{
+    // global $db;
+
+    // //Get the most recent unread message from the server, if none exist, get the most recent period. 
+    // $sql = "SELECT id "
+}
+
+
+/**
  * Call this function when a users identity has been confirmed and they should be logged in. 
  * Generates and handles the userSessionToken that makes sure that a user is who they claim to be.
  * NOTICE: Verification of identity must be complete. 
@@ -195,6 +208,9 @@ function userErrorCodes(int $code)
 
         case 5:
             return "5: Lösenord matchar inte. Försök igen";
+            break;
+        case 6:
+            return "6: Den användaren finns inte. Försök igen";
             break;
     }
 }
