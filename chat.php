@@ -5,14 +5,13 @@ session_start();
 
 $userID = checkLogin();
 
-var_dump($userID);
+
 
 $otherUserName = "";
 $otherUserFriendly = "";
 
 //If no conversation is present, auto-redirect.
 if (isset($_GET['conversation']) == false) {
-    print("Hello!");
     autoRedirectToConversation($userID);
 } else {
     $conversationID = $_GET['conversation'];
@@ -41,7 +40,15 @@ if (isset($_GET['conversation']) == false) {
     $otherUserFriendly = $row['friendly_name'];
 }
 
-
+//Check and send a message
+if (isset($_POST['new-message-text'])) {
+    $sql = "INSERT INTO message (id, conversation_id, from_id, content, been_read) VALUES (null, :conversation_id, :from_id, :content, 0)";
+    $ps = $db->prepare($sql);
+    $ps->bindValue(":conversation_id", $conversationID);
+    $ps->bindValue(":from_id", $userID);
+    $ps->bindValue(":content", $_POST['new-message-text']);
+    $ps->execute();
+}
 
 
 
@@ -127,18 +134,9 @@ if (isset($_GET['conversation']) == false) {
         </ul>
     </nav>
     <main class="chat-window-main">
-        <section class="message sentby-this">
-            <p class="message-details">
-                Du
-                <time datetime="2020-12-02 15:03">2/12 15:09</time>
-            </p>
-            <p class="message-text">
-                ok
-            </p>
-        </section>
         <?php
         //Find all messages in this conversation
-        $sql = "SELECT * FROM message WHERE conversation_id=:conversation_id";
+        $sql = "SELECT * FROM message WHERE conversation_id=:conversation_id ORDER BY time_sent DESC";
         $ps = $db->prepare($sql);
         $ps->bindValue(":conversation_id", $conversationID);
         $ps->execute();
@@ -149,10 +147,16 @@ if (isset($_GET['conversation']) == false) {
             while ($message = $ps->fetch()) {
                 //Check who the message is from.
                 if ($message['from_id'] == $userID) {
+                    //FIXME Add Emoji Support
                     //The message was sent by this user
-                    echo "<section class=\"message sentby-other\"> <p class=\"message-details\"> Du <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time>";
+                    echo "<section class=\"message sentby-this\">";
+                    echo "<p class=\"message-details\"> Du <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time></p>";
                 } else {
+                    echo "<section class=\"message sentby-other\">";
+                    echo "<p class=\"message-details\">" . htmlspecialchars($otherUserFriendly) . " <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time></p>";
                 }
+
+                echo "<p class=\"message-text\">" . htmlspecialchars($message['content']) . "</p></section>";
             }
         }
 
