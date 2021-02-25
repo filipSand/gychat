@@ -16,7 +16,7 @@ if (isset($_GET['conversation']) == false) {
     autoRedirectToConversation($userID);
 } else {
     $conversationID = $_GET['conversation'];
-    //Get the friendly name and usernameof the person the conversation is with .
+    //Get the friendly name and username of the person the conversation is with .
     $sql = "SELECT * FROM conversation WHERE id=:id";
     $ps = $db->prepare($sql);
     $ps->bindValue(":id", $conversationID);
@@ -71,8 +71,8 @@ if (isset($_GET['conversation']) == false) {
         <button id="menu" class="header-button"><img src="graphics/menuicon.svg" alt="Öppna meny" class="button-image"></button>
 
         <div class="current-chat">
-            <h2 class="current-chat-friendly-name"><?= $otherUserFriendly ?></h2>
-            <h3 class="current-chat-username"><?= $otherUserName ?></h3>
+            <h2 class="current-chat-friendly-name"><?= htmlspecialchars($otherUserFriendly) ?></h2>
+            <h3 class="current-chat-username"><?= htmlspecialchars($otherUserName) ?></h3>
         </div>
         <button id="user-button" class="header-button"><img src="graphics/usericon.svg" alt="(användarnamn)" class="button-image"></button>
     </header>
@@ -90,7 +90,7 @@ if (isset($_GET['conversation']) == false) {
 
             while ($row = $ps->fetch()) {
                 echo "<li class=\"conversation-list-litem\">";
-                echo "<a href=\"chat.php?conversation=" . htmlspecialchars($row['id'], 2)  . ">";
+                echo "<a href=\"chat.php?conversation=" . htmlspecialchars($row['id'], 2)  . "\" class=\"left-menu-link\">";
                 //Check wether the logged in user is 1 or 2
                 if ($row['user1_id'] == $userID) {
                     $otherUserID = $row['user2_id'];
@@ -106,7 +106,7 @@ if (isset($_GET['conversation']) == false) {
 
                 $rowinfo = $psinfo->fetch();
 
-                echo "<p class=\"conversation-list-friendly-name\">{$rowinfo['friendly_name']}</p>";
+                echo "<p class=\"conversation-list-friendly-name\">" . htmlspecialchars($rowinfo['friendly_name']) . "</p>";
                 echo "<p class=\"conversation-list-last-message\">Hej på dig! Jag skriver här ett meddelande..</p>";
                 echo "</a> </li>";
             }
