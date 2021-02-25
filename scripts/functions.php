@@ -7,13 +7,13 @@ require_once "config.php";
 /**
  * Check what conversation the server should auto-redirect to if none is set in $_GET.
  * If no conversation is found auto-redirect to newconversation.php
+ * 
+ * @param $user - The user ID for which redirection should occur. 
  */
-function autoRedirectToConversation()
+function autoRedirectToConversation($user)
 {
+    //TODO Implement this after implementing messages
     // global $db;
-
-    // //Get the most recent unread message from the server, if none exist, get the most recent period. 
-    // $sql = "SELECT id "
 }
 
 
