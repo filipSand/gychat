@@ -17,8 +17,6 @@ if (isset($_POST['username'])) {
     $ps->bindValue(":username", $_POST['username']);
     $ps->execute();
 
-    var_dump($ps->errorInfo());
-
     if ($ps->rowCount() == 1) {
         $info = $ps->fetch();
         $passwordHash = $info['password_hash'];
@@ -71,7 +69,8 @@ if (isset($_POST['username'])) {
         <button type="submit" id="login-button">Logga in</button>
         <p id="login-message"><?= $message ?></p>
     </form>
-    <h3><a href="signup.php">Ny användare</a></h3>
+    <p><i>eller...</i></p>
+    <h3><a href="signup.php">Registrera ny användare</a></h3>
 
 
 </body>
