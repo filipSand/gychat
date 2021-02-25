@@ -30,7 +30,7 @@ if (isset($_POST['new-user'])) {
             header("Location: chat.php?conversation={$candidate}");
             exit;
         } else {
-            var_dump($errorInfo);
+            $message = userErrorCodes(1);
         }
     } else {
         $message = userErrorCodes(6);

@@ -4,7 +4,6 @@ include_once "scripts/config.php";
 include_once "scripts/functions.php";
 //Will be returned to the user on error
 $message = "";
-var_dump($_POST);
 //If the information is set
 if (isset($_POST['username'])) {
     //Check that the username isn't taken
@@ -17,7 +16,6 @@ if (isset($_POST['username'])) {
     if ($ps->rowCount() == 0) {
         //Check that the same password was entered into both the password and the confirm password fields
         if ($_POST['password'] == $_POST['password-confirm']) {
-            var_dump("HEEEEJ");
             $sql = "INSERT INTO user (id, name, friendly_name, password_hash) VALUES (NULL, :name, :friendly_name, :password_hash)";
             $ps = $db->prepare($sql);
             $ps->bindValue(":name", $_POST['username']);
@@ -29,7 +27,6 @@ if (isset($_POST['username'])) {
 
             //If the returned error code is 00000, then the operation was completed successfully and the user can be logged in with their new user. 
             $result = $ps->errorInfo();
-            var_dump($result);
             if ($result[0] == '00000') {
                 //Get the freshly created userID
                 $sql = "SELECT id FROM user WHERE name=:name";
@@ -38,7 +35,6 @@ if (isset($_POST['username'])) {
                 $ps->execute();
 
                 $row = $ps->fetch();
-                var_dump($row);
                 logInUser($row['id'], true);
             } else {
                 $message = userErrorCodes(1);

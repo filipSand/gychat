@@ -39,7 +39,6 @@ function logInUser(int $userId, bool $keepBetweenSessions)
     $ps->bindValue(":browser_session", session_id());
     $ps->execute();
 
-    var_dump($ps->errorInfo());
 
     //Store a cookie with the token on the user's computer for 2 months
     if ($keepBetweenSessions) {
@@ -57,7 +56,6 @@ function generateUniqueToken()
 {
     //Generate a random candidate for an ID
     $candidate = bin2hex(random_bytes(16));
-    var_dump($candidate);
 
     //Get the database connection!
     //https://www.geeksforgeeks.org/php-variables/
@@ -91,15 +89,11 @@ function checkLogin()
     if (isset($_SESSION['token'])) {
         $token = $_SESSION['token'];
 
-        var_dump($token);
-
         //Call the database and verify the token!
         $sql = "SELECT * FROM session WHERE token=:token";
         $ps = $db->prepare($sql);
         $ps->bindValue(":token", $token);
         $ps->execute();
-
-        var_dump($ps->rowCount());
 
 
         //Should the token exist, store the response in $return
