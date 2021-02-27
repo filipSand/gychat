@@ -5,6 +5,8 @@ include_once "scripts/functions.php";
 $userID = checkLogin();
 $message = "";
 
+
+//Check, validate and create new conversation for submitted username
 if (isset($_POST['new-user'])) {
     //Look up the user and see if they exist
     $sql = "SELECT * FROM user WHERE name=:name";
@@ -73,36 +75,9 @@ if (isset($_POST['new-user'])) {
     <div id="blackbox"></div>
     <nav class="left-menu" id="left-menu-a">
         <ul class="left-menu-list conversation-list">
-            <li class="conversation-list-item">
-                <a href="#" class="left-menu-link">
-                    <p class="conversation-list-friendly-name">Förnamn Efternamn</p>
-                    <p class="conversation-list-last-message">Hej på dig! Jag skriver här ett meddelande..</p>
-                </a>
-            </li>
-            <li class="conversation-list-item">
-                <a href="#" class="left-menu-link">
-                    <p class="conversation-list-friendly-name">Förnamn Efternamn</p>
-                    <p class="conversation-list-last-message">Hej på dig! Jag skriver här ett meddelande..</p>
-                </a>
-            </li>
-            <li class="conversation-list-item">
-                <a href="#" class="left-menu-link">
-                    <p class="conversation-list-friendly-name">Förnamn Efternamn</p>
-                    <p class="conversation-list-last-message">Hej på dig! Jag skriver här ett meddelande..</p>
-                </a>
-            </li>
-            <li class="conversation-list-item">
-                <a href="#" class="left-menu-link">
-                    <p class="conversation-list-friendly-name">Förnamn Efternamn</p>
-                    <p class="conversation-list-last-message">Hej på dig! Jag skriver här ett meddelande..</p>
-                </a>
-            </li>
-            <li class="conversation-list-item">
-                <a href="#" class="left-menu-link">
-                    <p class="conversation-list-friendly-name">Förnamn Efternamn</p>
-                    <p class="conversation-list-last-message">Hej på dig! Jag skriver här ett meddelande..</p>
-                </a>
-            </li>
+            <?php
+            generateSideMenu($userID);
+            ?>
         </ul>
         <ul class="left-menu-list left-menu-settings">
             <li class="left-menu-setting">

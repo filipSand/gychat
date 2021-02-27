@@ -3,6 +3,44 @@
 declare(strict_types=1);
 require_once "config.php";
 
+/**
+ * Generates the side menu
+ * @param $userID The user id for whom the menu should be generated.
+ */
+function generateSideMenu($userID)
+{
+    global $db;
+
+    //Generate a list of all conversations the logged in user has.
+    $sql = "SELECT * FROM conversation WHERE user1_id=:user_id OR user2_id=:user_id";
+    $ps = $db->prepare($sql);
+    $ps->bindValue(":user_id", $userID);
+    $ps->execute();
+
+    while ($row = $ps->fetch()) {
+        echo "<li class=\"conversation-list-litem\">";
+        echo "<a href=\"chat.php?conversation=" . htmlspecialchars($row['id'], 2)  . "\" class=\"left-menu-link\">";
+        //Check wether the logged in user is 1 or 2
+        if ($row['user1_id'] == $userID) {
+            $otherUserID = $row['user2_id'];
+        } else {
+            $otherUserID = $row['user1_id'];
+        }
+
+        //Get the name of the other user!
+        $sql = "SELECT friendly_name FROM user WHERE id=:id";
+        $psinfo = $db->prepare($sql);
+        $psinfo->bindValue(":id", $otherUserID);
+        $psinfo->execute();
+
+        $rowinfo = $psinfo->fetch();
+
+        echo "<p class=\"conversation-list-friendly-name\">" . htmlspecialchars($rowinfo['friendly_name']) . "</p>";
+        echo "<p class=\"conversation-list-last-message\">Hej på dig! Jag skriver här ett meddelande..</p>";
+        echo "</a> </li>";
+    }
+}
+
 
 /**
  * Check what conversation the server should auto-redirect to if none is set in $_GET.
