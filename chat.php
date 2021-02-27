@@ -122,7 +122,13 @@ if (isset($_POST['new-message-text'])) {
                     //FIXME Add Emoji Support
                     //The message was sent by this user
                     echo "<section class=\"message sentby-this\">";
-                    echo "<p class=\"message-details\"> Du <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time></p>";
+                    //Check if the message has been read
+                    if ($message['been_read'] == 1) {
+                        $readStatus = "Läst";
+                    } else {
+                        $readStatus = "Skickat";
+                    }
+                    echo "<p class=\"message-details\"> Du <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time> - $readStatus</p>";
                 } else {
                     echo "<section class=\"message sentby-other\">";
                     echo "<p class=\"message-details\">" . htmlspecialchars($otherUserFriendly) . " <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time></p>";
@@ -135,7 +141,7 @@ if (isset($_POST['new-message-text'])) {
                     $sql = "UPDATE message SET been_read=1 WHERE id=:id AND from_id=:from_id";
                     $updatePs = $db->prepare($sql);
                     $updatePs->bindValue(":id", $message['id']);
-                    $updatePs->bindValue(":from_id", $otherUserID);
+                    $updatePs->bindValue(":from_id", $chatOtherUserID);
                     $updatePs->execute();
                 }
             }
