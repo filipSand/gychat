@@ -6,7 +6,6 @@ session_start();
 $userID = checkLogin();
 
 
-
 $otherUserName = "";
 $otherUserFriendly = "";
 
@@ -157,6 +156,15 @@ if (isset($_POST['new-message-text'])) {
                 }
 
                 echo "<p class=\"message-text\">" . htmlspecialchars($message['content']) . "</p></section>";
+
+                //If the message sent by the other user is marked as un-read, then mark it as read!
+                if ($message['been_read'] == 0) {
+                    $sql = "UPDATE message SET been_read=1 WHERE id=:id AND from_id=:from_id";
+                    $updatePs = $db->prepare($sql);
+                    $updatePs->bindValue(":id", $message['id']);
+                    $updatePs->bindValue(":from_id", $otherUserID);
+                    $updatePs->execute();
+                }
             }
         }
 

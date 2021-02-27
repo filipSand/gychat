@@ -22,9 +22,16 @@ if (isset($_POST['username'])) {
         $passwordHash = $info['password_hash'];
         $passwordProvided = $_POST['password'];
 
+        //Keep between session??
+        if (isset($_POST['keep-login'])) {
+            $keepBetweenSessions = true;
+        } else {
+            $keepBetweenSessions = false;
+        }
+
         if (password_verify($passwordProvided, $passwordHash)) {
             $message = userErrorCodes(0);
-            logInUser($info['id'], true);
+            logInUser($info['id'], $keepBetweenSessions);
             exit;
         } else {
             $message = userErrorCodes(2);
@@ -67,6 +74,8 @@ if (isset($_POST['username'])) {
         <label for="password" id="password-label">Lösenord</label>
         <input type="password" id="password-field" name="password" class="login-field" placeholder="Minst 12 tecken" required>
         <button type="submit" id="login-button">Logga in</button>
+        <input type="checkbox" name="keep-login" id="keep-login" value="true">
+        <label for="keep-login" id="keep-login-label">Håll mig inloggad</label>
         <p id="login-message"><?= $message ?></p>
     </form>
     <p><i>eller...</i></p>

@@ -7,7 +7,7 @@ body{
 .login-page-form{
     display: grid;
     grid-template-columns: 2% 32% 64% 2%;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     row-gap: 0.4em;
 }
 
@@ -37,16 +37,30 @@ a{
 
 #login-button{
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 4;
     color: black;
 }
 
 #login-message{
     grid-column: 3;
+    grid-row: 4;
+    margin: 0;
+    padding-left: 2%;
+}
+
+#keep-login{
+    justify-self: right;
+    grid-column: 2;
+    grid-row: 3;
+}
+
+#keep-login-label{
+    grid-column: 3;
     grid-row: 3;
     margin: 0;
     padding-left: 2%;
 }
+
 
 @media screen and (min-width:800px){
     .login-page-form{
@@ -75,11 +89,21 @@ a{
     }
     #login-button{
         grid-column: 1;
-        grid-row: 3;
+        grid-row: 4;
         color: black;
     }
 
     #login-message{
+        grid-column: 2;
+        grid-row: 4;
+    }
+
+    #keep-login{
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    #keep-login-label{
         grid-column: 2;
         grid-row: 3;
     }
