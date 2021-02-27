@@ -8,7 +8,6 @@ $userID = checkLogin();
 
 $otherUserName = "";
 $otherUserFriendly = "";
-
 //If no conversation is present, auto-redirect.
 if (isset($_GET['conversation']) == false) {
     autoRedirectToConversation($userID);
@@ -24,8 +23,12 @@ if (isset($_GET['conversation']) == false) {
     if ($result['user1_id'] == $userID) {
         //User 1 is the logged in user.
         $chatOtherUserID = $result['user2_id'];
-    } else {
+    } else if ($result['user2_id'] == $userID) {
         $chatOtherUserID = $result['user1_id'];
+    } else {
+        //The user has attempted to make unathorized entry to another conversation. Redirect to regular chat.php and redirect
+        header("Location: chat.php");
+        exit;
     }
 
     //Get the other users username and friendly name
@@ -46,6 +49,12 @@ if (isset($_POST['new-message-text'])) {
     $ps->bindValue(":conversation_id", $conversationID);
     $ps->bindValue(":from_id", $userID);
     $ps->bindValue(":content", $_POST['new-message-text']);
+    $ps->execute();
+
+    //Update the timestamp in conversation
+    $sql = "UPDATE conversation SET last_message_sent = CURRENT_TIMESTAMP WHERE id=:id";
+    $ps = $db->prepare($sql);
+    $ps->bindValue(":id", $conversationID);
     $ps->execute();
 }
 

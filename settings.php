@@ -1,3 +1,15 @@
+<?php
+include_once "scripts/config.php";
+include_once "scripts/functions.php";
+session_start();
+
+$userID = checkLogin();
+//TODO Make this page
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,8 +34,8 @@
         <button id="menu" class="header-button"><img src="graphics/menuicon.svg" alt="Öppna meny" class="button-image"></button>
 
         <div class="current-chat">
-            <h2 class="current-chat-friendly-name">Skapa ny konversation</h2>
-            <h3 class="current-chat-username">Sök på @användarnamn</h3>
+            <h2 class="current-chat-friendly-name">Inställningar</h2>
+            <h3 class="current-chat-username">Administrera ditt konto </h3>
         </div>
 
     </header>
@@ -48,6 +60,19 @@
             </li>
         </ul>
     </nav>
+    <main>
+        <form class="setting-form" id="change-password" method="POST">
+            <p><label for="current-password">Nuvarande lösenord</label></p>
+            <input type="password" name="current-password" id="current-password" required>
+            <p><label for="new-password">Nytt lösenord</label></p>
+            <input type="password" name="new-password" id="new-password" required>
+            <p><label for="confirm-new-password">Bekräfta nytt lösenord</label></p>
+            <input type="password" name="confirm-new-password" id="confirm-new-password" required>
+            <button type="submit">Bytt lösenord</button>
+        </form>
+
+    </main>
+
 </body>
 
 </html>

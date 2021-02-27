@@ -44,14 +44,32 @@ function generateSideMenu($userID)
 
 /**
  * Check what conversation the server should auto-redirect to if none is set in $_GET.
+ * Takes the conversation 
  * If no conversation is found auto-redirect to newconversation.php
  * 
  * @param $user - The user ID for which redirection should occur. 
  */
-function autoRedirectToConversation($user)
+function autoRedirectToConversation($userID)
 {
-    //TODO Implement this after implementing messages
-    // global $db;
+
+    global $db;
+
+    $sql = "SELECT id FROM conversation WHERE user1_id=:user_id OR user2_id=:user_id ORDER BY last_message_sent DESC";
+    $ps = $db->prepare($sql);
+    $ps->bindValue(":user_id", $userID);
+    $ps->execute();
+
+    print("I'm here atleast!!");
+
+    if ($ps->rowCount() == 0) {
+        //There are no conversations for this user, redirect to newconversation.php
+        header("Location: ./newconversation.php");
+        exit;
+    } else {
+        $row = $ps->fetch();
+        header("Location: ./chat.php?conversation=" . $row['id']);
+        exit;
+    }
 }
 
 
