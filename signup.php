@@ -16,28 +16,36 @@ if (isset($_POST['username'])) {
     if ($ps->rowCount() == 0) {
         //Check that the same password was entered into both the password and the confirm password fields
         if ($_POST['password'] == $_POST['password-confirm']) {
-            $sql = "INSERT INTO user (id, name, friendly_name, password_hash) VALUES (NULL, :name, :friendly_name, :password_hash)";
-            $ps = $db->prepare($sql);
-            $ps->bindValue(":name", $_POST['username']);
-            $ps->bindValue(":friendly_name", $_POST['friendly-name']);
-            //See https://www.php.net/manual/en/function.password-hash.php 
-            $ps->bindValue(":password_hash", password_hash($_POST['password'], PASSWORD_DEFAULT));
-            $ps->execute();
+            //Checks that the password matches the requirements.
+            //Copied from https://medium.com/factory-mind/regex-cookbook-most-wanted-regex-aa721558c3c1 with the special characters requirements removed
+            if (preg_match("/(?=^.{12,}$)((?=.*\w)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]))^.*/", $_POST['password'])) {
 
-
-            //If the returned error code is 00000, then the operation was completed successfully and the user can be logged in with their new user. 
-            $result = $ps->errorInfo();
-            if ($result[0] == '00000') {
-                //Get the freshly created userID
-                $sql = "SELECT id FROM user WHERE name=:name";
+                $sql = "INSERT INTO user (id, name, friendly_name, password_hash) VALUES (NULL, :name, :friendly_name, :password_hash)";
                 $ps = $db->prepare($sql);
                 $ps->bindValue(":name", $_POST['username']);
+                $ps->bindValue(":friendly_name", $_POST['friendly-name']);
+                //See https://www.php.net/manual/en/function.password-hash.php 
+                $ps->bindValue(":password_hash", password_hash($_POST['password'], PASSWORD_DEFAULT));
                 $ps->execute();
 
-                $row = $ps->fetch();
-                logInUser($row['id'], true);
+
+                //If the returned error code is 00000, then the operation was completed successfully and the user can be logged in with their new user. 
+                $result = $ps->errorInfo();
+                if ($result[0] == '00000') {
+                    //Get the freshly created userID
+                    $sql = "SELECT id FROM user WHERE name=:name";
+                    $ps = $db->prepare($sql);
+                    $ps->bindValue(":name", $_POST['username']);
+                    $ps->execute();
+
+                    $row = $ps->fetch();
+                    logInUser($row['id'], true);
+                } else {
+                    $message = userErrorCodes(1);
+                    var_dump($message);
+                }
             } else {
-                $message = userErrorCodes(1);
+                $message = userErrorCodes(7);
             }
         } else {
             $message = userErrorCodes(5);

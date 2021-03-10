@@ -4,7 +4,7 @@ body{
     margin-left: 2%;
 }
 
-.login-page-form{
+.login-page-form, .setting-form{
     display: grid;
     grid-template-columns: 2% 32% 64% 2%;
     grid-template-rows: 1fr 1fr 3fr 1fr 1fr 1fr;
@@ -25,21 +25,21 @@ a{
     grid-row: 1;
 }
 
-#friendly-name-label{
+#friendly-name-label, #current-password-label{
     grid-column: 2;
     grid-row: 2;
 }
 
-#friendly-name-field{
+#friendly-name-field, #current-password-label{
     grid-column: 3;
     grid-row: 2;
 }
 
-#password-label{
+#password-label, #new-password-label{
     grid-column: 2;
     grid-row: 4;
 }
-#password-field{
+#password-field, #new-password-field{
     grid-column: 3;
     grid-row: 4;
 }
@@ -56,33 +56,33 @@ a{
     
 }
 
-#password-confirm-label{
+#password-confirm-label, #new-password-confirm-label{
     grid-column: 2;
     grid-row: 5;
 }
-#password-confirm-field{
+#password-confirm-field, #new-password-confirm-field{
     grid-column: 3;
     grid-row: 5;
 }
 
-#login-button{
+#login-button, #change-button{
     grid-column: 2;
     grid-row: 6;
     color: black;
 }
 
 @media screen and (min-width:800px){
-    .login-page-form{
+    .login-page-form, .setting-form{
         grid-template-columns: 33% 67% ;
         grid-template-rows: 1fr 1fr 2fr 1fr 1fr 1fr;
     }
     
-    #username-label{
+    #username-label, #current-password-label{
         grid-column: 1;
         grid-row: 1;
     }
     
-    #username-field{
+    #username-field, #current-password-field{
         grid-column: 2;
         grid-row: 1;
     }
@@ -109,24 +109,24 @@ a{
         margin-bottom: 0;
     }
     
-    #password-label{
+    #password-label, #new-password-label{
         grid-column: 1;
         grid-row: 4;
     }
-    #password-field{
+    #password-field, #new-password-field{
         grid-column: 2;
         grid-row: 4;
     }
-    #password-confirm-label{
+    #password-confirm-label, #confirm-new-password-label{
         grid-column: 1;
         grid-row: 5;
     }
-    #password-confirm-field{
+    #password-confirm-field, #confirm-new-password-field{
         grid-column: 2;
         grid-row: 5;
     }
     
-    #login-button{
+    #login-button, #change-button{
         grid-column: 1;
         grid-row: 6;
         color: black;

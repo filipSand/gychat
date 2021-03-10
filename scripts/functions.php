@@ -54,12 +54,11 @@ function autoRedirectToConversation($userID)
 
     global $db;
 
+    //Get's the most recent conversation, as that would probably where the user would like to start. 
     $sql = "SELECT id FROM conversation WHERE user1_id=:user_id OR user2_id=:user_id ORDER BY last_message_sent DESC";
     $ps = $db->prepare($sql);
     $ps->bindValue(":user_id", $userID);
     $ps->execute();
-
-    print("I'm here atleast!!");
 
     if ($ps->rowCount() == 0) {
         //There are no conversations for this user, redirect to newconversation.php
@@ -238,7 +237,7 @@ function userErrorCodes(int $code)
 {
     switch ($code) {
         case 0:
-            return "0: Success!";
+            return "0: Klart!";
             break;
 
         case 1:
@@ -262,6 +261,12 @@ function userErrorCodes(int $code)
             break;
         case 6:
             return "6: Den användaren finns inte. Försök igen";
+            break;
+        case 7:
+            return "7: Lösenordet uppfyller inte kraven.";
+            break;
+        case 8:
+            return "8: Fel lösenord. Försök igen";
             break;
     }
 }
