@@ -170,24 +170,21 @@ function checkLogin()
                 if ($return['browser_session'] == session_id()) {
                     return $return['user_id'];
                 } else {
-                    print("1");
-                    // header("Location: index.php");
+                    header("Location: index.php");
                     exit;
                 }
             }
         } else {
             //If the token exist but no response in database, redirect to login page and clear $_SESSION['token']
             unset($_SESSION['token']);
-            print("2");
-            // header("Location: index.php");
+            header("Location: index.php");
             exit;
         }
     } else if (doesValidLoginCookieExist()) {
         //Call yourself and verify the token in $_SESSION.
         checkLogin();
     } else {
-        print("3");
-        // header("Location: index.php");
+        header("Location: index.php");
         exit;
     }
 }
