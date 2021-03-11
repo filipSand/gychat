@@ -1,3 +1,6 @@
+Button styling adopted from https://css-tricks.com/overriding-default-button-styles/
+
+ICONS
 menuicon.svg:
 Icon by Raj Dev on Freeicons.io. CC-BY-3.0
 https://freeicons.io/business-and-online-icons/menu-icon-icon
