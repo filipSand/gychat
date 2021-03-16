@@ -4,6 +4,18 @@ declare(strict_types=1);
 require_once "config.php";
 
 /**
+ * Decrypts a message
+ * @param $toDerypt - The string to decrypt
+ * @param $key - The decryption key
+ * @param $iv - The IV
+ */
+function decryptMessage($toDerypt, $key, $iv)
+{
+    global $cipher;
+    var_dump(openssl_decrypt($toDerypt, $cipher, $key, 0, $iv));
+}
+
+/**
  * Generates the side menu
  * @param $userID The user id for whom the menu should be generated.
  */
@@ -79,7 +91,6 @@ function autoRedirectToConversation($userID)
  */
 function logInUser(int $userId, bool $keepBetweenSessions)
 {
-    print("I'm here");
     global $db;
     $token = generateUniqueToken();
     //Store the token in session
@@ -140,7 +151,6 @@ function generateUniqueToken()
 function checkLogin()
 {
     global $db;
-    var_dump($_SESSION);
     if (isset($_SESSION['token'])) {
         $token = $_SESSION['token'];
 
@@ -149,7 +159,6 @@ function checkLogin()
         $ps = $db->prepare($sql);
         $ps->bindValue(":token", $token);
         $ps->execute();
-        var_dump($ps->rowCount());
 
         //Should the token exist, store the response in $return
         if ($return = $ps->fetch()) {
@@ -177,7 +186,6 @@ function checkLogin()
             }
         } else {
             //If the token exist but no response in database, redirect to login page and clear $_SESSION['token']
-            var_dump($ps->errorInfo());
             unset($_SESSION['token']);
             header("Location: index.php");
             exit;

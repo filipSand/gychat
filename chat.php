@@ -4,7 +4,8 @@ include_once "scripts/functions.php";
 session_start();
 
 $userID = checkLogin();
-
+$cipher = "AES-128-CBC";
+$ivLength = openssl_cipher_iv_length($cipher);
 
 $otherUserName = "";
 $otherUserFriendly = "";
@@ -42,13 +43,33 @@ if (isset($_GET['conversation']) == false) {
     $otherUserFriendly = $row['friendly_name'];
 }
 
+//Get the encryption key which is the password hash.
+//Not secure, see report for info
+$sql = "SELECT password_hash FROM user WHERE id=:id";
+$ps = $db->prepare($sql);
+$ps->bindValue(":id", $userID);
+$ps->execute();
+$userHash = $ps->fetchColumn();
+//And the hash for the user, for decyption
+$sql = "SELECT password_hash FROM user WHERE name=:name";
+$ps = $db->prepare($sql);
+$ps->bindValue(":name", $otherUserName);
+$ps->execute();
+$otherHash = $ps->fetchColumn();
+
 //Check and send a message
 if (isset($_POST['new-message-text'])) {
-    $sql = "INSERT INTO message (id, conversation_id, from_id, content, been_read) VALUES (null, :conversation_id, :from_id, :content, 0)";
+
+    $iv = openssl_random_pseudo_bytes($ivLength);
+    $ivHex = bin2hex($iv);
+    $encryptedMessage = openssl_encrypt($_POST['new-message-text'], $cipher, $userHash, 0, $iv);
+
+    $sql = "INSERT INTO message (id, conversation_id, from_id, content, been_read, iv) VALUES (null, :conversation_id, :from_id, :content, 0, :iv)";
     $ps = $db->prepare($sql);
     $ps->bindValue(":conversation_id", $conversationID);
     $ps->bindValue(":from_id", $userID);
-    $ps->bindValue(":content", $_POST['new-message-text']);
+    $ps->bindValue(":content", $encryptedMessage);
+    $ps->bindValue(":iv", $ivHex);
     $ps->execute();
 
     //Update the timestamp in conversation
@@ -57,6 +78,8 @@ if (isset($_POST['new-message-text'])) {
     $ps->bindValue(":id", $conversationID);
     $ps->execute();
 }
+
+
 
 
 
@@ -124,11 +147,11 @@ if (isset($_POST['new-message-text'])) {
         $ps = $db->prepare($sql);
         $ps->bindValue(":conversation_id", $conversationID);
         $ps->execute();
-
         if ($ps->rowCount() == 0) {
             //Send a first message.
         } else {
             while ($message = $ps->fetch()) {
+                $plaintext = null;
                 //Check who the message is from.
                 if ($message['from_id'] == $userID) {
                     //The message was sent by this user
@@ -140,12 +163,16 @@ if (isset($_POST['new-message-text'])) {
                         $readStatus = "Skickat";
                     }
                     echo "<p class=\"message-details\"> Du <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time> - $readStatus</p>";
+                    $plaintext = openssl_decrypt($message['content'], $cipher, $userHash, 0, hex2bin($message['iv']));
                 } else {
+                    //The message was sent by the other user
                     echo "<section class=\"message sentby-other\">";
                     echo "<p class=\"message-details\">" . htmlspecialchars($otherUserFriendly) . " <time datetime=\"{$message['time_sent']}\">{$message['time_sent']}</time></p>";
+                    $plaintext = openssl_decrypt($message['content'], $cipher, $otherHash, 0, hex2bin($message['iv']));
                 }
 
-                echo "<p class=\"message-text\">" . htmlspecialchars($message['content']) . "</p></section>";
+
+                echo "<p class=\"message-text\">" . htmlspecialchars($plaintext) . "</p></section>";
 
                 //If the message sent by the other user is marked as un-read, then mark it as read!
                 if ($message['been_read'] == 0) {
