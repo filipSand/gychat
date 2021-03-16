@@ -68,6 +68,7 @@ if (isset($_POST['new-message-text'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- From Google Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200;400;600&display=swap" rel="stylesheet">
@@ -78,6 +79,7 @@ if (isset($_POST['new-message-text'])) {
     <link rel="stylesheet" href="style/chat.css">
     <script src="scripts/functions.js"></script>
     <script src="scripts/chat.js" defer></script>
+    <script src="scripts/update.js" defer></script>
     <title>Chat - Gymnasiearbete</title>
 </head>
 
@@ -88,6 +90,7 @@ if (isset($_POST['new-message-text'])) {
         <div class="current-chat">
             <h2 class="current-chat-friendly-name"><?= htmlspecialchars($otherUserFriendly) ?></h2>
             <h3 class="current-chat-username"><?= htmlspecialchars($otherUserName) ?></h3>
+            <span id="conversation-id" style="display: none"><?= $conversationID ?></span>
         </div>
         <button id="user-button" class="header-button"><img src="graphics/usericon.svg" alt="(användarnamn)" class="button-image"></button>
     </header>
@@ -128,7 +131,6 @@ if (isset($_POST['new-message-text'])) {
             while ($message = $ps->fetch()) {
                 //Check who the message is from.
                 if ($message['from_id'] == $userID) {
-                    //FIXME Add Emoji Support
                     //The message was sent by this user
                     echo "<section class=\"message sentby-this\">";
                     //Check if the message has been read

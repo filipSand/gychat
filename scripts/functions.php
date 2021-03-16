@@ -202,7 +202,7 @@ function doesValidLoginCookieExist()
     if (isset($_COOKIE['keep-between-session'])) {
         $token = $_COOKIE['keep-between-session'];
 
-        //Test that this works (it should though :shrugh:)
+        //Test that this works (it should unless it has been tampered with)
         $sql = "SELECT * FROM session WHERE token=:token";
         $ps = $db->prepare($sql);
         $ps->bindValue(":token", $token);
@@ -210,7 +210,6 @@ function doesValidLoginCookieExist()
         if ($ps->rowCount() > 0) {
             $result = $ps->fetch();
             if ($result['keep_between_sessions'] == 1) {
-                //TODO Check date of expiry
                 $_SESSION['token'] = $result['token'];
                 return true;
             } else {
