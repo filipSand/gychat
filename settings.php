@@ -1,6 +1,6 @@
 <?php
-include_once "scripts/config.php";
-include_once "scripts/functions.php";
+include_once "./scripts/config.php";
+include_once "./scripts/functions.php";
 session_start();
 
 $userID = checkLogin();
@@ -69,7 +69,7 @@ if (isset($_POST['delete-password'])) {
         setcookie("keep_between_sessions", "", 1);
         session_unset();
         //Redirect to index.php
-        header("Location: index.php");
+        header("Location: ./index.php");
         exit;
     } else {
         $message2 = userErrorCodes(8);

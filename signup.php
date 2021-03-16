@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "scripts/config.php";
-include_once "scripts/functions.php";
+include_once "./scripts/config.php";
+include_once "./scripts/functions.php";
 //Will be returned to the user on error
 $message = "";
 //If the information is set

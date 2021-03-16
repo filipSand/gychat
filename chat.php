@@ -1,6 +1,6 @@
 <?php
-include_once "scripts/config.php";
-include_once "scripts/functions.php";
+include_once "./scripts/config.php";
+include_once "./scripts/functions.php";
 session_start();
 
 $userID = checkLogin();
@@ -27,7 +27,7 @@ if (isset($_GET['conversation']) == false) {
         $chatOtherUserID = $result['user1_id'];
     } else {
         //The user has attempted to make unathorized entry to another conversation. Redirect to regular chat.php and redirect
-        header("Location: chat.php");
+        header("Location: ./chat.php");
         exit;
     }
 
