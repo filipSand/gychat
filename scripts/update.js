@@ -9,9 +9,8 @@ setInterval(async () => {
 
     let response = await fetch('scripts/checkmessage?id=' + conversationId);
     let reply = await response.text();
-
     if (reply == "1") {
-        window.location.href("chat.php?conversation=" + conversationId);
+        window.location.href = "chat.php?conversation=" + conversationId;
     }
 }, 1500);
 

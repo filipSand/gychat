@@ -73,7 +73,7 @@ if (isset($_POST['new-message-text'])) {
     $ps->execute();
 
     //Update the timestamp in conversation
-    $sql = "UPDATE conversation SET last_message_sent = CURRENT_TIMESTAMP WHERE id=:id";
+    $sql = "UPDATE conversation SET last_message_sent = UNIX_TIMESTAMP() WHERE id=:id";
     $ps = $db->prepare($sql);
     $ps->bindValue(":id", $conversationID);
     $ps->execute();
@@ -181,10 +181,16 @@ if (isset($_POST['new-message-text'])) {
                     $updatePs->bindValue(":id", $message['id']);
                     $updatePs->bindValue(":from_id", $chatOtherUserID);
                     $updatePs->execute();
+
+                    $sqla = "UPDATE conversation SET last_message_sent = UNIX_TIMESTAMP() WHERE id:id";
+                    $lmsPs = $db->prepare($sqla);
+                    $lmsPs->bindValue(":id", $conversationID);
+                    $lmsPs->execute();
                 }
             }
         }
 
+        $_SESSION['lastUpdate'] = time();
 
         ?>
     </main>
