@@ -1,6 +1,6 @@
 <?php
-include_once "./scripts/config.php";
-include_once "./scripts/functions.php";
+include_once "scripts/config.php";
+include_once "scripts/functions.php";
 session_start();
 
 $userID = checkLogin();
@@ -69,7 +69,7 @@ if (isset($_POST['delete-password'])) {
         setcookie("keep_between_sessions", "", 1);
         session_unset();
         //Redirect to index.php
-        header("Location: ./index.php");
+        header("Location: index.php");
         exit;
     } else {
         $message2 = userErrorCodes(8);
@@ -165,7 +165,7 @@ $friendlyName = $ps->fetchColumn();
             <p><?= $message2 ?></p>
         </form>
         <h3>Attribution</h3>
-        <a href="./ATTRIBUTION.txt" target="_blank">Länk till attribution för ikoner och extern kod.</a>
+        <a href="attribution.txt" target="_blank">Länk till attribution för ikoner och extern kod.</a>
     </main>
 
 </body>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once "./config.php";
+include_once "config.php";
 //When this script is ran, the user is logged out from the application and any login cookie is removed. 
 
 //Delete session from database

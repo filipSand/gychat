@@ -1,7 +1,7 @@
 <?php
 session_start();
-include_once "./scripts/config.php";
-include_once "./scripts/functions.php";
+include_once "scripts/config.php";
+include_once "scripts/functions.php";
 $userID = checkLogin();
 $message = "";
 
@@ -29,7 +29,7 @@ if (isset($_POST['new-user'])) {
         $errorInfo = $ps->errorInfo();
         if ($errorInfo[0] == "00000") {
             //Executed succesfully! Redirect
-            header("Location: ./chat.php?conversation={$candidate}");
+            header("Location: chat.php?conversation={$candidate}");
             exit;
         } else {
             $message = userErrorCodes(1);

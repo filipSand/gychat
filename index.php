@@ -1,13 +1,13 @@
 <?php
 session_start();
-include_once "./scripts/config.php";
-include_once "./scripts/functions.php";
+include_once "scripts/config.php";
+include_once "scripts/functions.php";
 
 $message = "";
 
 if (doesValidLoginCookieExist()) {
     //If a valid cookie exists, redirect to chat.php and let that script handle verification.
-    header("Location: ./chat.php");
+    header("Location: chat.php");
     exit;
 }
 
@@ -79,7 +79,7 @@ if (isset($_POST['username'])) {
         <p id="login-message"><?= $message ?></p>
     </form>
     <p><i>eller...</i></p>
-    <h3><a href="./signup.php">Registrera ny användare</a></h3>
+    <h3><a href="signup.php">Registrera ny användare</a></h3>
 
 
 </body>

@@ -62,11 +62,11 @@ function autoRedirectToConversation($userID)
 
     if ($ps->rowCount() == 0) {
         //There are no conversations for this user, redirect to newconversation.php
-        header("Location: ./newconversation.php");
+        header("Location: newconversation.php");
         exit;
     } else {
         $row = $ps->fetch();
-        header("Location: ./chat.php?conversation=" . $row['id']);
+        header("Location: chat.php?conversation=" . $row['id']);
         exit;
     }
 }
@@ -79,6 +79,7 @@ function autoRedirectToConversation($userID)
  */
 function logInUser(int $userId, bool $keepBetweenSessions)
 {
+    print("I'm here");
     global $db;
     $token = generateUniqueToken();
     //Store the token in session
@@ -94,12 +95,13 @@ function logInUser(int $userId, bool $keepBetweenSessions)
     $ps->execute();
 
 
+
     //Store a cookie with the token on the user's computer for 2 months
     if ($keepBetweenSessions) {
         setcookie("keep-between-session", $token, time() + 60 * 60 * 24 * 60);
     }
 
-    header("Location: ../chat.php");
+    header("Location: chat.php");
     exit;
 }
 
@@ -124,8 +126,7 @@ function generateUniqueToken()
     if ($ps->rowCount() == 0) {
         return $candidate;
     } else {
-        $newCandidate = generateUniqueToken();
-        return $newCandidate;
+        return generateUniqueToken();
     }
 }
 
@@ -139,7 +140,7 @@ function generateUniqueToken()
 function checkLogin()
 {
     global $db;
-
+    var_dump($_SESSION);
     if (isset($_SESSION['token'])) {
         $token = $_SESSION['token'];
 
@@ -148,7 +149,7 @@ function checkLogin()
         $ps = $db->prepare($sql);
         $ps->bindValue(":token", $token);
         $ps->execute();
-
+        var_dump($ps->rowCount());
 
         //Should the token exist, store the response in $return
         if ($return = $ps->fetch()) {
@@ -176,6 +177,7 @@ function checkLogin()
             }
         } else {
             //If the token exist but no response in database, redirect to login page and clear $_SESSION['token']
+            var_dump($ps->errorInfo());
             unset($_SESSION['token']);
             header("Location: index.php");
             exit;

@@ -1,6 +1,6 @@
 <?php
-include_once "./scripts/config.php";
-include_once "./scripts/functions.php";
+include_once "scripts/config.php";
+include_once "scripts/functions.php";
 session_start();
 
 $userID = checkLogin();
@@ -27,7 +27,7 @@ if (isset($_GET['conversation']) == false) {
         $chatOtherUserID = $result['user1_id'];
     } else {
         //The user has attempted to make unathorized entry to another conversation. Redirect to regular chat.php and redirect
-        header("Location: ./chat.php");
+        header("Location: chat.php");
         exit;
     }
 
@@ -105,13 +105,13 @@ if (isset($_POST['new-message-text'])) {
         </ul>
         <ul class="left-menu-list left-menu-settings">
             <li class="left-menu-setting">
-                <a href="./newconversation.php" class="left-menu-link"><img src="graphics/plusicon.svg" alt="Lägg till" class="button-image left-menu-setting-image">Ny chatt</a>
+                <a href="newconversation.php" class="left-menu-link"><img src="graphics/plusicon.svg" alt="Lägg till" class="button-image left-menu-setting-image">Ny chatt</a>
             </li>
             <li class="left-menu-setting">
-                <a href="./settings.php" class="left-menu-link"><img src="graphics/settingsicon.svg" alt="Inställningar" class="button-image left-menu-setting-image">Inställningar</a>
+                <a href="settings.php" class="left-menu-link"><img src="graphics/settingsicon.svg" alt="Inställningar" class="button-image left-menu-setting-image">Inställningar</a>
             </li>
             <li class="left-menu-setting">
-                <a href="./scripts/logout.php" class="left-menu-link"><img src="graphics/exitsymbol.svg" alt="Logga ut" class="button-image left-menu-setting-image">
+                <a href="scripts/logout.php" class="left-menu-link"><img src="graphics/exitsymbol.svg" alt="Logga ut" class="button-image left-menu-setting-image">
                     Logga ut
                 </a>
             </li>
